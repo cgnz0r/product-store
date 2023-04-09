@@ -1,17 +1,11 @@
-const productModel = require('../models/product')
+const ProductService = require('../services/product')
 
 class AdminProductController {
-    async getAllProducts(req, res) {
-        try {
-            res.json({ message: 'admin :: getAllProducts : success' })
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     async createProduct(req, res) {
         try {
-            res.json({ message: 'admin :: createProduct : success' })
+            const { name, quantity, price, image } = req.body
+            const result = await ProductService.createProduct({ name, quantity, price, image })
+            return res.status(result.code).json({ message: result.message })
         } catch (e) {
             console.log(e)
         }
@@ -19,15 +13,20 @@ class AdminProductController {
 
     async updateProduct(req, res) {
         try {
-            res.json({ message: 'admin :: updateProduct : success' })
+            const id = req.params.id
+            const { name, quantity, price, image } = req.body
+            const result = await ProductService.updateProduct(id, { name, quantity, price, image })
+            return res.status(result.code).json({ message: result.message })
         } catch (e) {
             console.log(e)
         }
     }
 
-    async removeProduct(req, res) {
+    async deleteProduct(req, res) {
         try {
-            res.json({ message: 'admin :: removeProduct : success' })
+            const id = req.params.id
+            const result = await ProductService.deleteProduct(id)
+            return res.status(result.code).json({ message: result.message })
         } catch (e) {
             console.log(e)
         }

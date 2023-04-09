@@ -1,15 +1,19 @@
+const ProductService = require('../services/product')
+
 class CustomerProductController {
-    async getAllProducts(req, res) {
+    async getProductList(req, res) {
         try {
-            res.json({ message: 'customer :: getAllProducts : success' })
+            const result = await ProductService.getProductList()
+            return res.status(result.code).json(result.elements)
         } catch (e) {
             console.log(e)
         }
     }
 
-    async getProduct(req, res) {
+    async getProductItem(req, res) {
         try {
-            res.json({ message: 'customer :: getProduct : success' })
+            const result = await ProductService.getProductItem(req.params.id)
+            return res.status(result.code).json(result.elements)
         } catch (e) {
             console.log(e)
         }
